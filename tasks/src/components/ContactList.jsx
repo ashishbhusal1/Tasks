@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../firebase";
 import "./ContactList.css";
 
@@ -10,12 +10,12 @@ const ContactList = () => {
     const fetchContacts = async () => {
       try {
         console.log("Attempting to fetch contacts...");
-        const querySnapshot = await getDocs(collection(db, "contacts"));
-        let fetchedContacts = querySnapshot.docs.map((doc) => doc.data());
-
-        fetchedContacts = fetchedContacts.sort((a, b) =>
-          a.name.localeCompare(b.name)
+        const contactsQuery = query(
+          collection(db, "contacts"),
+          orderBy("name")
         );
+        const querySnapshot = await getDocs(contactsQuery);
+        const fetchedContacts = querySnapshot.docs.map((doc) => doc.data());
 
         console.log("Fetched contacts:", fetchedContacts);
         setContacts(fetchedContacts);

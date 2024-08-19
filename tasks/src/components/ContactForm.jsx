@@ -11,7 +11,7 @@ const ContactForm = ({ closeModal }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [picture, setPicture] = useState(null);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); // Loading state
+  const [loading, setLoading] = useState(false);
 
   const onDrop = useCallback((acceptedFiles) => {
     setPicture(acceptedFiles[0]);
